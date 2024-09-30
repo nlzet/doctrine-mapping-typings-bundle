@@ -1,0 +1,60 @@
+{
+  "name": "nlzet/doctrine-mapping-typings-bundle",
+  "type": "symfony-bundle",
+  "description": "symfony bundle to convert doctrine entities into typescript typings",
+  "keywords": [
+    "symfony",
+    "cli",
+    "typescript",
+    "doctrine"
+  ],
+  "homepage": "https://github.com/nlzet/NlzetDoctrineMappingTypingsBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Niels Verbeek",
+      "email": "niels@kreable.com",
+      "homepage": "https://www.kreable.com",
+      "role": "Senior Full-Stack Webdeveloper"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "symfony/console": "^5.4|^6.0|^7.0",
+    "symfony/config": "^5.4|^6.0|^7.0",
+    "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+    "symfony/http-kernel": "^5.4|^6.0|^7.0",
+    "nlzet/doctrine-mapping-typings": "dev-main@dev"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.4",
+    "symplify/easy-coding-standard": "^12.3",
+    "phpstan/phpstan": "^1.10",
+    "phpstan/phpstan-deprecation-rules": "^1.1",
+    "phpstan/phpstan-phpunit": "^1.3",
+    "phpstan/phpstan-strict-rules": "^1.5",
+    "phpstan/phpstan-symfony": "^1.0",
+    "phpunit/phpunit": "^10",
+    "psalm/plugin-phpunit": "^0.18",
+    "psalm/plugin-symfony": "^5.0",
+    "rector/rector": "^1.1",
+    "vimeo/psalm": "^5.8.0"
+  },
+  "autoload": {
+    "psr-4": { "Nlzet\\DoctrineMappingTypingsBundle\\": "src/" }
+  },
+  "autoload-dev": {
+    "psr-4": { "Nlzet\\DoctrineMappingTypingsBundle\\Tests\\": "tests/" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "sort-packages": true
+    }
+  }
+}
