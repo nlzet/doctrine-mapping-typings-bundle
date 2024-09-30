@@ -74,7 +74,7 @@ class AboutCommand extends Command
 
             $table->addRow([
                 $metadata->getName(),
-                $generator->renameClass($metadata->getName()),
+                $generator->getClassAlias($metadata->getName()),
             ]);
         }
         $table->render();

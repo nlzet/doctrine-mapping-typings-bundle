@@ -58,11 +58,11 @@ class AboutCommandTest extends TestCase
         $doctrineFactory = new DoctrineConfigurationFactory();
         $configuration = $doctrineFactory->createConfiguation();
         $entityManager = $doctrineFactory->createEntityManager($configuration);
-        $convertCommand = new AboutCommand($entityManager, $generatorConfig);
+        $aboutCommand = new AboutCommand($entityManager, $generatorConfig);
 
         $cmdOuput = new BufferedOutput();
         try {
-            $convertCommand->run(new ArrayInput($input), $cmdOuput);
+            $aboutCommand->run(new ArrayInput($input), $cmdOuput);
         } catch (\Exception $e) {
             static::fail($e->getMessage());
         }
