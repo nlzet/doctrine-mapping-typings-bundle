@@ -13,7 +13,6 @@ namespace Nlzet\DoctrineMappingTypingsBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Nlzet\DoctrineMappingTypings\Doctrine\EntityReader;
-use Nlzet\DoctrineMappingTypings\Typings\GeneratorConfig;
 use Nlzet\DoctrineMappingTypings\Typings\ModelTypingGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -30,7 +29,7 @@ class ConvertCommand extends Command
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly GeneratorConfig $generatorConfig,
+        private readonly ModelTypingGenerator $modelTypingGenerator,
     ) {
         parent::__construct();
     }
@@ -49,28 +48,28 @@ class ConvertCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $generatorConfig = $this->modelTypingGenerator->getGeneratorConfig();
         $io = new SymfonyStyle($input, $output);
         if ([] !== $this->inputToArray($input->getOption('exclude-patterns'))) {
-            $this->generatorConfig->setExcludePatterns($this->inputToArray($input->getOption('exclude-patterns')));
+            $generatorConfig->setExcludePatterns($this->inputToArray($input->getOption('exclude-patterns')));
         }
         if ([] !== $this->inputToArray($input->getOption('class-aliases'))) {
-            $this->generatorConfig->setClassAliases($this->inputToArray($input->getOption('class-aliases')));
+            $generatorConfig->setClassAliases($this->inputToArray($input->getOption('class-aliases')));
         }
         if ([] !== $this->inputToArray($input->getOption('class-replacements'))) {
-            $this->generatorConfig->setClassReplacements($this->inputToArray($input->getOption('class-replacements')));
+            $generatorConfig->setClassReplacements($this->inputToArray($input->getOption('class-replacements')));
         }
-        $this->generatorConfig->setOnlyExposed((bool) $input->getOption('only-exposed'));
+        $generatorConfig->setOnlyExposed((bool) $input->getOption('only-exposed'));
 
-        $entityReader = new EntityReader($this->generatorConfig, $this->entityManager);
+        $entityReader = new EntityReader($generatorConfig, $this->entityManager);
         $destination = ''.$input->getArgument('destination');
         $allMetadata = $entityReader->getEntities();
 
         $outputs = [];
         foreach ($allMetadata as $metadata) {
             $properties = $entityReader->getProperties($metadata->getName());
-            $generator = new ModelTypingGenerator($this->generatorConfig, $metadata, $properties);
 
-            $outputs[] = $generator->generate();
+            $outputs[] = $this->modelTypingGenerator->generate($metadata, $properties);
         }
 
         $outputContent = implode(\PHP_EOL, $outputs);

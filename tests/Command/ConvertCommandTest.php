@@ -13,6 +13,7 @@ namespace Nlzet\DoctrineMappingTypingsBundle\Tests\Command;
 
 use Nlzet\DoctrineMappingTypings\Tests\Util\DoctrineConfigurationFactory;
 use Nlzet\DoctrineMappingTypings\Typings\GeneratorConfig;
+use Nlzet\DoctrineMappingTypings\Typings\ModelTypingGenerator;
 use Nlzet\DoctrineMappingTypingsBundle\Command\ConvertCommand;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -48,7 +49,8 @@ class ConvertCommandTest extends TestCase
         $doctrineFactory = new DoctrineConfigurationFactory();
         $configuration = $doctrineFactory->createConfiguation();
         $entityManager = $doctrineFactory->createEntityManager($configuration);
-        $convertCommand = new ConvertCommand($entityManager, $generatorConfig);
+        $generator = new ModelTypingGenerator($generatorConfig);
+        $convertCommand = new ConvertCommand($entityManager, $generator);
         static::assertTrue($convertCommand->getDefinition()->hasArgument('destination'));
 
         $cmdOuput = new BufferedOutput();
