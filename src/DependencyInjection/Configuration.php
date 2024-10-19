@@ -35,6 +35,9 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('search')
                     ->scalarPrototype()->end()
                 ->end()
+                ->booleanNode('always_optional')->defaultFalse()->end()
+                ->booleanNode('treat_optional_as_nullable')->defaultFalse()->end()
+                ->booleanNode('treat_nullable_as_optional')->defaultTrue()->end()
                 ->booleanNode('only_exposed')->defaultFalse()->end()
             ->end();
 
